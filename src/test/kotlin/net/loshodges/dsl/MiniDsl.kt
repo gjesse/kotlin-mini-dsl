@@ -200,22 +200,22 @@ class MiniDsl {
     }
 
     fun put(entities: List<String>) {
-        entities.forEach { dao::put }
+        entities.forEach { dao.put(it) }
         await().until(
                 Runnable {
                     assertThat(entities.mapNotNull {
-                        dao::get
+                        dao.get(it)
                     }).isEqualTo(entities)
                 }
         )
     }
 
     fun delete(entities: List<String>) {
-        entities.forEach { dao::delete }
+        entities.forEach { dao.delete(it) }
         await().until(
                 Runnable {
                     assertThat(entities.mapNotNull {
-                        dao::get
+                        dao.get(it)
                     }).hasSize(0)
                 }
         )
