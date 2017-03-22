@@ -203,9 +203,8 @@ class MiniDsl {
         entities.forEach { dao.put(it) }
         await().until(
                 Runnable {
-                    assertThat(entities.mapNotNull {
-                        dao.get(it)
-                    }).isEqualTo(entities)
+                    assertThat(entities.mapNotNull(dao::get))
+                            .isEqualTo(entities)
                 }
         )
     }
@@ -214,9 +213,8 @@ class MiniDsl {
         entities.forEach { dao.delete(it) }
         await().until(
                 Runnable {
-                    assertThat(entities.mapNotNull {
-                        dao.get(it)
-                    }).hasSize(0)
+                    assertThat(entities.mapNotNull(dao::get))
+                            .hasSize(0)
                 }
         )
     }
